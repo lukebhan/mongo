@@ -32,12 +32,18 @@
 #include "mongo/base/data_type_endian.h"
 #include "mongo/bson/bsonelement.h"
 
+#include <bitset>
+#include <boost/multiprecision/cpp_int.hpp>
 #include <cmath>
+#include <iomanip>
+#include <iostream>
+#include <iterator>
+#include <vector>
 
 namespace mongo {
 
 uint64_t Simple8bTypeUtil::encodeInt64(int64_t val) {
-    return (uint64_t(val) << 1) ^ (val >> 63);
+    return (static_cast<uint64_t>(val) << 1) ^ (val >> 63);
 }
 
 int64_t Simple8bTypeUtil::decodeInt64(uint64_t val) {
