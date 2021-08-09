@@ -44,6 +44,14 @@ int64_t Simple8bTypeUtil::decodeInt64(uint64_t val) {
     return (val >> 1) ^ (~(val & 1) + 1);
 }
 
+uint128_t Simple8bTypeUtil::encodeInt128(int128_t val) {
+    return (static_cast<uint128_t>(val) << 1) ^ (val >> 127);
+}
+
+int128_t Simple8bTypeUtil::decodeInt128(uint128_t val) {
+    return static_cast<int128_t>((val >> 1) ^ (~(val & 1) + 1));
+}
+
 int64_t Simple8bTypeUtil::encodeObjectId(const OID& oid) {
     uint64_t encoded = 0;
     uint8_t* encodedBytes = reinterpret_cast<uint8_t*>(&encoded);

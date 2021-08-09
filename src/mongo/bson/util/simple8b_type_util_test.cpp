@@ -303,3 +303,37 @@ TEST(Simple8b, TestObjectId) {
     OID actualObjId = Simple8bTypeUtil::decodeObjectId(encodedObjId, objId.getInstanceUnique());
     ASSERT_EQUALS(objId, actualObjId);
 }
+
+TEST(Simple8bTypeUtil, EncodeAndDecodePositiveSignedInt128) {
+    int128_t signedVal = Int128::MakeInt128FromString("1").value();
+    uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
+    ASSERT_EQUALS(unsignedVal, 2);
+    int128_t decodedSignedVal = Simple8bTypeUtil::decodeInt128(unsignedVal);
+    ASSERT_EQUALS(decodedSignedVal, signedVal);
+}
+
+TEST(Simple8bTypeUtil, EncodeAndDecodeNegativeSignedInt128) {
+    int128_t signedVal = Int128::MakeInt128FromString("-1").value();
+    uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
+    ASSERT_EQUALS(unsignedVal, 0x1);
+    int128_t decodedSignedVal = Simple8bTypeUtil::decodeInt128(unsignedVal);
+    ASSERT_EQUALS(decodedSignedVal, signedVal);
+}
+
+TEST(Simple8bTypeUtil, EncodeAndDecodeMaxPositiveSignedInt128) {
+    int128_t signedVal = absl::Int128Max();
+    uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
+    uint128_t expectedVal = UInt128::MakeUint128FromString("340282366920938463463374607431768211454").value();
+    ASSERT_EQUALS(unsignedVal,expectedVal);
+    int128_t decodedSignedVal = Simple8bTypeUtil::decodeInt128(unsignedVal);
+    ASSERT_EQUALS(decodedSignedVal, signedVal);
+}
+
+TEST(Simple8bTypeUtil, EncodeAndDecodeMaxNegativeSignedInt128) {
+    int128_t signedVal = absl::Int128Min();
+    uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
+    uint128_t expectedVal = UInt128::MakeUint128FromString("340282366920938463463374607431768211455").value();
+    ASSERT_EQUALS(unsignedVal, expectedVal);
+    int128_t decodedSignedVal = Simple8bTypeUtil::decodeInt128(unsignedVal);
+    ASSERT_EQUALS(decodedSignedVal, signedVal);
+}
