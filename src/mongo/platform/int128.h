@@ -31,7 +31,7 @@
 
 #include <absl/numeric/int128.h>
 #include <boost/optional.hpp>
-#include <locale>
+#include <ctype.h>
 
 using uint128_t = absl::uint128;
 using int128_t = absl::int128;
@@ -70,7 +70,7 @@ public:
         bool sign = false;
         boost::optional<uint128_t> val;
         if (s[0] == '-') {
-            sign = -1;
+            sign = true;
             // Skip the - sign.
             val = UInt128::MakeUint128FromString(s.substr(1, s.length() - 1));
         } else {

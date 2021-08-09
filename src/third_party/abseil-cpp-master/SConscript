@@ -7,7 +7,7 @@ env.InjectThirdParty(libraries=['abseil-cpp'])
 env.Library(
     target="absl_numeric",
     source = [
-      "abseil-cpp/absl/numeric/int128.cc"
+      "abseil-cpp/absl/numeric/int128.cc",
     ]
 )
 
