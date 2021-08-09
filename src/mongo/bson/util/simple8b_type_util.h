@@ -28,7 +28,6 @@
  */
 
 #include "mongo/bson/oid.h"
-#include "mongo/platform/int128.h"
 
 #include <array>
 #include <boost/optional.hpp>

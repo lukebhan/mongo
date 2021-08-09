@@ -32,13 +32,7 @@
 #include "mongo/base/data_type_endian.h"
 #include "mongo/bson/bsonelement.h"
 
-#include <bitset>
-#include <boost/multiprecision/cpp_int.hpp>
 #include <cmath>
-#include <iomanip>
-#include <iostream>
-#include <iterator>
-#include <vector>
 
 namespace mongo {
 
