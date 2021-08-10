@@ -30,57 +30,6 @@
 #pragma once
 
 #include <absl/numeric/int128.h>
-#include <boost/optional.hpp>
-#include <ctype.h>
 
 using uint128_t = absl::uint128;
 using int128_t = absl::int128;
-
-// Wrapper class providing a static method to create a uint128 from string as this does not exist in
-// native absl.
-class UInt128 {
-public:
-    static boost::optional<uint128_t> MakeUint128FromString(const std::string& s) {
-        if (s.empty())
-            return boost::none;
-        uint128_t startingVal = 0;
-        uint128_t prevVal = 0;
-        for (size_t index = 0; index < s.size(); ++index) {
-            const char cur = s[index];
-            if (!std::isdigit(cur))
-                return boost::none;
-            startingVal *= 10;
-            startingVal += cur - '0';
-            if (prevVal > startingVal)
-                // Overflow
-                return boost::none;
-            prevVal = startingVal;
-        }
-        return startingVal;
-    }
-};
-
-// Wrapper class providing a static method to create a int128 from string as this does not exist in
-// native absl.
-class Int128 {
-public:
-    static boost::optional<int128_t> MakeInt128FromString(const std::string& s) {
-        if (s.empty())
-            return boost::none;
-        bool sign = false;
-        boost::optional<uint128_t> val;
-        if (s[0] == '-') {
-            sign = true;
-            // Skip the - sign.
-            val = UInt128::MakeUint128FromString(s.substr(1, s.length() - 1));
-        } else {
-            val = UInt128::MakeUint128FromString(s);
-        }
-        if (val == boost::none || val.value() > absl::Int128Max())
-            // overflow
-            return boost::none;
-        int128_t signedVal =
-            sign ? static_cast<int128_t>(val.value()) * -1 : static_cast<int128_t>(val.value());
-        return signedVal;
-    }
-};
