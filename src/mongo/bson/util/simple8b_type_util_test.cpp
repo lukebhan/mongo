@@ -321,7 +321,7 @@ TEST(Simple8bTypeUtil, EncodeAndDecodeNegativeSignedInt128) {
 }
 
 TEST(Simple8bTypeUtil, EncodeAndDecodeMaxPositiveSignedInt128) {
-    int128_t signedVal = absl::Int128Max();
+    int128_t signedVal = std::numeric_limits<int128_t>::max();
     uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
     uint128_t expectedVal = absl::MakeInt128(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFE);
     ASSERT_EQUALS(unsignedVal,expectedVal);
@@ -330,8 +330,9 @@ TEST(Simple8bTypeUtil, EncodeAndDecodeMaxPositiveSignedInt128) {
 }
 
 TEST(Simple8bTypeUtil, EncodeAndDecodeMaxNegativeSignedInt128) {
-    int128_t signedVal = absl::Int128Min();
+    int128_t signedVal = std::numeric_limits<int128_t>::lowest();
     uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
+    std::cout << signedVal << std::endl;
     uint128_t expectedVal = absl::MakeInt128(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);
     ASSERT_EQUALS(unsignedVal, expectedVal);
     int128_t decodedSignedVal = Simple8bTypeUtil::decodeInt128(unsignedVal);
