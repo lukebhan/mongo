@@ -330,7 +330,7 @@ TEST(Simple8bTypeUtil, EncodeAndDecodeMaxPositiveSignedInt128) {
 }
 
 TEST(Simple8bTypeUtil, EncodeAndDecodeMaxNegativeSignedInt128) {
-    int128_t signedVal = std::numeric_limits<int128_t>::lowest();
+    int128_t signedVal = std::numeric_limits<int128_t>::min();
     uint128_t unsignedVal = Simple8bTypeUtil::encodeInt128(signedVal);
     std::cout << signedVal << std::endl;
     uint128_t expectedVal = absl::MakeInt128(0xFFFFFFFFFFFFFFFF, 0xFFFFFFFFFFFFFFFF);

@@ -45,7 +45,9 @@ int64_t Simple8bTypeUtil::decodeInt64(uint64_t val) {
 }
 
 uint128_t Simple8bTypeUtil::encodeInt128(int128_t val) {
-    return (val << 1) ^ (val >> 127);
+  std::cout << (static_cast<uint128_t>(val << 1)) << std::endl;
+  std::cout << static_cast<uint128_t>(val >> 127) << std::endl;
+  return (static_cast<uint128_t>(val << 1) ^ static_cast<uint128_t>(val >> 127));
 }
 
 int128_t Simple8bTypeUtil::decodeInt128(uint128_t val) {
